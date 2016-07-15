@@ -15,6 +15,9 @@ type TabController struct {
 	beego.Controller
 }
 
+type ErrorController struct {
+    beego.Controller
+}
 
 func (c *MainController) Get() {
 	c.Data["AdminName"] = "talset"
@@ -26,7 +29,12 @@ func (c *BlaController) Get() {
 	c.TplName = "json.tpl"
 	mystruct := "{bla: foo}"
   c.Data["jsonp"] = mystruct
-  c.ServeJSONP()
+	}
+
+	func (c *ErrorController) Error404() {
+		c.TplName = "error.tpl"
+	  c.Data["error"] = "Page not found"
+		c.Data["code"] = "404"
 	}
 
 	func (c *TabController) Get() {
@@ -65,5 +73,4 @@ func (c *BlaController) Get() {
 			"Google":    {37.42202, -122.08408},
 		}
 		c.Data["structmap"] = structmap
-
 	}
