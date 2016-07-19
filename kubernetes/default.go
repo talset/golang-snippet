@@ -113,4 +113,18 @@ func main() {
     }
     fmt.Println("   Per namespaces:")
     DisplayMap(sn)
+
+    // Route / Ingress
+    ing, err := c.Ingress(api.NamespaceAll).List(api.ListOptions{})
+    checkErr(err, "Can't get ingress:")
+    fmt.Printf("Ingress:\n   Total: %d\n", len(ing.Items))
+
+    in := make(map[string]int)
+    for _, i := range ing.Items {
+        in[i.Namespace]+=1
+    }
+
+    fmt.Println("   Per namespaces:")
+    DisplayMap(in)
+
 }
